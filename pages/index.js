@@ -6,6 +6,7 @@ import Image from "next/image";
 import Layout from "../components/Layout";
 import { getSession } from "next-auth/react";
 import Link from "next/link";
+import { millisecondsToMinutes } from './../utils/index';
 
 export default function Home() {
   const { data: session } = useSession();
@@ -83,28 +84,30 @@ export default function Home() {
               </div>
               {tracksData.items
                 ? tracksData.items.map((src, i) => (
-                    <div key={i}>
-                      <Link href={`/track/${src.id}`} >
-                      <div className="flex items-center mb-5">
-                        <div>
+                  <div className="w-full flex justify-between" key={i}>
+                    <Link href={`/track/${src.id}`} >
+                      <div className="w-full flex justify-between items-center mb-5">
+                        <div className="flex">
                           <Image
                             width={80}
                             height={80}
                             src={src.album.images[0].url}
                           />
+
+                          <div className="ml-5">
+                            <h3 className="text-xl">{src.name}</h3>
+                            <p>{src.artists[0].name}</p>
+                            <p className="flex items-center">
+                              {src.album.name.length > 35 ? src.album.name.slice(0, 35) + '...' : src.album.name} <span className="mx-[6px] text-2xl">·</span>{" "}
+                              {src.album.release_date.substr(0, 4)}
+                            </p>
+                          </div>
                         </div>
-                        <div className="ml-5">
-                          <h3 className="text-xl">{src.name}</h3>
-                          <p>{src.artists[0].name}</p>
-                          <p className="flex items-center">
-                            {src.album.name} <span className="mx-[6px] text-2xl">·</span>{" "}
-                            {src.album.release_date.substr(0, 4)}
-                          </p>
-                        </div>
+                        <p>{millisecondsToMinutes(src.duration_ms)}</p>
                       </div>
-                      </Link>
-                    </div>
-                  ))
+                    </Link>
+                  </div>
+                ))
                 : null}
             </div>
 
@@ -120,16 +123,20 @@ export default function Home() {
               <div>
                 {artistsData.items
                   ? artistsData.items.map((src, i) => (
-                      <div className="flex items-center mb-5" key={i}>
-                        <Image width={80} height={80} src={src.images[0].url} />
-                        <div className="ml-5">
-                          <h3 className="text-xl">{src.name}</h3>
-                          <p className="capitalize">
-                            {src.genres[0]}
-                          </p>
+                    <div key={i}>
+                      <Link href={`/artist/${src.id}`} >
+                        <div className="flex items-center mb-5">
+                          <Image width={80} height={80} src={src.images[0].url} />
+                          <div className="ml-5">
+                            <h3 className="text-xl">{src.name}</h3>
+                            <p className="capitalize">
+                              {src.genres[0]}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    ))
+                      </Link>
+                    </div>
+                  ))
                   : null}
               </div>
             </div>
