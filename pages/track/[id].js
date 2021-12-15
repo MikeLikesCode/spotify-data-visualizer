@@ -18,7 +18,7 @@ export default function Track({ data }) {
             <span key={i}> {name} </span>
           ))} </p>
           <p className="text-xl mb-4">{data.album.name}</p>
-          <a href={data.external_urls.spotify} className="flex justify-center items-center bg-[#1db954] px-2 py-[6px] text-md rounded-full uppercase font-medium"> <span><Spotify className="text-white text-xl mr-2"/></span> Listen on Spotify</a>
+          <a href={data.external_urls.spotify} className="flex w-60 justify-center items-center bg-[#1db954] px-2 py-[6px] text-md rounded-full uppercase font-medium"> <span><Spotify className="text-white text-xl mr-2"/></span> Listen on Spotify</a>
         </div>
       </div>
     </Layout>
